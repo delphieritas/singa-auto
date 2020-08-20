@@ -552,9 +552,9 @@ if __name__ == '__main__':
     os.environ.setdefault('WORKDIR_PATH', curpath)
     os.environ.setdefault('PARAMS_DIR_PATH', os.path.join(curpath, 'params'))
 
-    train_set_url = os.path.join(curpath, 'data', 'application_train_index.csv')
+    train_set_url = os.path.join(os.environ['DATA_DIR_PATH'], 'application_train_index.csv')
     valid_set_url = train_set_url
-    test_set_url = os.path.join(curpath, 'data', 'application_test_index.csv')
+    test_set_url = os.path.join(os.environ['DATA_DIR_PATH'], 'application_test_index.csv')
 
     test_queries = pd.read_csv(test_set_url, index_col=0).iloc[:5]
     test_queries = json.loads(test_queries.to_json(orient='records'))
