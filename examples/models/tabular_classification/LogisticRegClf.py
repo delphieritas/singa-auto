@@ -21,7 +21,7 @@ class LogisticRegClf(TabularClfModel):
     @staticmethod
     def get_knob_config():
         return {
-            'penalty': CategoricalKnob(['l1', 'l2']),
+            'penalty': CategoricalKnob([ 'l2']),
             'tol': FloatKnob(0.0001, 0.001),
             'C': IntegerKnob(4, 15),
             'fit_intercept': CategoricalKnob([True, False]),
@@ -71,9 +71,9 @@ class LogisticRegClf(TabularClfModel):
         return accuracy
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
-        data = self.prepare_X(queries)
-        probs = self._clf.predict_proba(data)
+        queries = pd.DataFrame(queries, index=[0]) 
+        # queries = self.prepare_X(queries)
+        probs = self._clf.predict_proba(queries)
         return probs.tolist()
 
     def destroy(self):
@@ -160,5 +160,6 @@ if __name__ == '__main__':
                          'SkinThickness': 30,
                          'Insulin': 90,
                          'BMI': 30.4,
+                         'DiabetesPedigreeFunction':0.165,
                          'Age': 40
                      }])
