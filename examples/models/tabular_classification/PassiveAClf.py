@@ -94,9 +94,9 @@ class PassiveAClf(TabularClfModel):
         return accuracy
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
+        queries = pd.DataFrame(queries, index=[0])
         data = self.prepare_X(queries)
-        probs = self._clf.predict_proba(data)
+        probs = self._clf._predict_proba_lr(data)
         return probs.tolist()
 
     def destroy(self):
