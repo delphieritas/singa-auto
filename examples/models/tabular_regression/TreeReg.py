@@ -97,10 +97,10 @@ class TreeReg(BaseModel):
         return 1 / rmse
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
+        queries = pd.DataFrame(queries, index=[0]) 
         data = self.prepare_X(queries)
         result = self._regressor.predict(data)
-        return result.tolist()[0]
+        return result.tolist()
 
     def destroy(self):
         pass
