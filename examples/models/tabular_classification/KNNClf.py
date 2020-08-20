@@ -67,14 +67,14 @@ class KNNClf(TabularClfModel):
         csv_path = dataset_path
         data = pd.read_csv(csv_path)
 
-        X_val = X_train = self.prepare_X(data)
+        X_val = self.prepare_X(data)
         y_val = data.iloc[:, -1]
 
         accuracy = self._clf.score(X_val, y_val)
         return accuracy
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
+        queries = pd.DataFrame(queries, index=[0]) 
         probs = self._clf.predict_proba(queries)
         return probs.tolist()
 
