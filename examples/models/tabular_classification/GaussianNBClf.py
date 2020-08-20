@@ -70,7 +70,7 @@ class GaussianClf(TabularClfModel):
         return accuracy
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
+        queries = pd.DataFrame(queries, index=[0]) 
         probs = self._clf.predict_proba(queries)
         return probs.tolist()
 
@@ -94,6 +94,7 @@ class GaussianClf(TabularClfModel):
         self._clf = pickle.loads(clf_bytes)
 
     def prepare_X(self, data):
+        data = data.iloc[:, :-1]
         sc = StandardScaler()
         return sc.fit_transform(data)
 
@@ -111,7 +112,7 @@ if __name__ == '__main__':
                      val_dataset_path='data/heart_test.csv',
                      queries=[{
                          'age': 50,
-                         'Sex': '0',
+                         'Sex': 0,
                          'cp': 3,
                          'trestbps': 130,
                          'chol': 220,
