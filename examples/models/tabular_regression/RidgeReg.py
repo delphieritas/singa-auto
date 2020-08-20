@@ -97,10 +97,10 @@ class RidgeReg(BaseModel):
         return 1 / rmse
 
     def predict(self, queries):
-        queries = [pd.DataFrame(query, index=[0]) for query in queries]
+        queries = pd.DataFrame(queries, index=[0]) 
         data = self.prepare_X(queries)
         result = self._regressor.predict(data)
-        return result.tolist()[0]
+        return result.tolist()
 
     def destroy(self):
         pass
@@ -148,15 +148,15 @@ class RidgeReg(BaseModel):
 
         return (X, y)
 
-    def median_dataset(self, df):
-        #replace zero values by median so that 0 will not affect median.
-        for col in df.columns:
-            df[col].replace(0, np.nan, inplace=True)
-            df[col].fillna(df[col].median(), inplace=True)
-        return df
+#     def median_dataset(self, df):
+#         #replace zero values by median so that 0 will not affect median.
+#         for col in df.columns:
+#             df[col].replace(0, np.nan, inplace=True)
+#             df[col].fillna(df[col].median(), inplace=True)
+#         return df
 
     def prepare_X(self, df):
-        data = self.median_dataset(df)
+        # df = self.median_dataset(df)
         X = PolynomialFeatures(interaction_only=True).fit_transform(df)
         return X
     def _build_regressor(self, alpha, normalize, copy_X, tol, solver,
